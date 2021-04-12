@@ -202,33 +202,35 @@ public class PlayerController : MonoBehaviour
         }
         else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaMetal"){
  
-            float distanceX = 0;
-            float distanceY = 0;
-
-            if (direction == Direction.UP)
+            float distanceX;
+            float distanceY;
+            
+            if (direction == Direction.UP && !moveBox)
+            {             
+                distanceX = transform.position.x;
+                distanceY = metalSurface.transform.position.y + 2.30f;
+                BoxTarget = new Vector3(distanceX, distanceY);
+            }
+            else if (direction == Direction.DOWN && !moveBox)
             {
                 distanceX = transform.position.x;
-                distanceY = metalSurface.transform.position.y - transform.position.y;
-                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(distanceX, distanceY + 0.93f), Speed * Time.deltaTime);
+                distanceY = metalSurface.transform.position.y - 2.35f;
+                BoxTarget = new Vector3(distanceX, distanceY);
+               
             }
-            else if (direction == Direction.DOWN)
+            else if (direction == Direction.RIGHT && !moveBox)
             {
-                distanceX = transform.position.x;
-                distanceY = metalSurface.transform.position.y - transform.position.y;
-                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(distanceX, distanceY - 0.93f), Speed * Time.deltaTime);
+                distanceX = metalSurface.transform.position.x + 2.35f;
+                distanceY = metalSurface.transform.position.y ;
+                BoxTarget = new Vector3(distanceX, distanceY);
             }
-            else if (direction == Direction.RIGHT)
+            else if (direction == Direction.LEFT && !moveBox)
             {
-                distanceX = metalSurface.transform.position.x - transform.position.x;
-                distanceY = transform.position.y;
-                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(distanceX + 0.93f, distanceY), Speed * Time.deltaTime);
+                distanceX = metalSurface.transform.position.x - 2.35f;
+                distanceY = metalSurface.transform.position.y;
+                BoxTarget = new Vector3(distanceX, distanceY);
             }
-            else if (direction == Direction.LEFT)
-            {
-                distanceX = metalSurface.transform.position.x - transform.position.x;
-                distanceY = transform.position.y;
-                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(distanceX - 0.93f, distanceY), Speed * Time.deltaTime);
-            }
+            moveBox = true;
 
         }
         else if (hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "ParedMetal")
