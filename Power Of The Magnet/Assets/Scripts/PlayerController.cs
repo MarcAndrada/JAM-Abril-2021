@@ -18,11 +18,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetPosition;
     [SerializeField] private Direction direction;
     [SerializeField] private Hability hability;
-
+    private bool moveBox = false;
+    private Vector3 BoxTarget;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         targetPosition = transform.position;
         direction = Direction.UP;
     }
@@ -41,17 +44,25 @@ public class PlayerController : MonoBehaviour
                     if (!CheckColision && direction == Direction.RIGHT)
                     {
                         targetPosition += new Vector3(0.93f, 0);
+                        if (BoxTarget == targetPosition)
+                        {
+                            targetPosition -= new Vector3(0.93f, 0);
+                        }
                     }
                     direction = Direction.RIGHT;
-                    
+
                 }
                 else
                 {
                     if (!CheckColision && direction == Direction.LEFT)
                     {
                         targetPosition -= new Vector3(0.93f, 0);
+                        if (BoxTarget == targetPosition)
+                        {
+                            targetPosition += new Vector3(0.93f, 0);
+                        }
                     }
-                    direction = Direction.LEFT;      
+                    direction = Direction.LEFT;
                 }
             }
             else
@@ -61,6 +72,10 @@ public class PlayerController : MonoBehaviour
                     if (!CheckColision && direction == Direction.UP)
                     {
                         targetPosition += new Vector3(0, 0.93f);
+                        if (BoxTarget == targetPosition)
+                        {
+                            targetPosition -= new Vector3(0, 0.93f);
+                        }
                     }
                     direction = Direction.UP;
                 }
@@ -69,26 +84,59 @@ public class PlayerController : MonoBehaviour
                     if (!CheckColision && direction == Direction.DOWN)
                     {
                         targetPosition -= new Vector3(0, 0.93f);
+                        if (BoxTarget == targetPosition)
+                        {
+                            targetPosition += new Vector3(0, 0.93f);
+                        }
                     }
                     direction = Direction.DOWN;
                 }
             }
 
         }
+
+        if (direction == Direction.RIGHT)
+        {
+            //cambiar rotacion
+        }
+
+        if (transform.position != targetPosition && !animator.GetBool("Walk"))
+        {
+            animator.SetBool("Walk", true);
+        }
+        else if (transform.position == targetPosition && animator.GetBool("Walk"))
+        {
+            animator.SetBool("Walk", false);
+        }
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, currentSpeed * Time.deltaTime);
 
-        if (PlayerInput.attractKey) {
+        if (PlayerInput.attractKey)
+        {
             hability = Hability.ATTRACT;
             ActivateHablility();
+            animator.SetBool("Atract", true);
         }
-        else if (PlayerInput.repelKey) {
+        else if (PlayerInput.repelKey)
+        {
             hability = Hability.REPEL;
             ActivateHablility();
+            animator.SetBool("Repel", true);
         }
         else
         {
             hability = Hability.NONE;
             currentSpeed = Speed;
+            animator.SetBool("Atract", false);
+            animator.SetBool("Repel", false);
+        }
+
+        if (moveBox)
+        {
+            metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, BoxTarget, Speed * Time.deltaTime);
+            if (metalSurface.transform.position == BoxTarget)
+            {
+                moveBox = false;
+            }
         }
     }
     private bool checkRaycastWithScenario(RaycastHit2D _hits) {
@@ -133,24 +181,26 @@ public class PlayerController : MonoBehaviour
         if (hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "CajaMetal")
         {
             currentSpeed = Speed;
+            moveBox = true;
             if (direction == Direction.UP)
-            { 
-                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3 (transform.position.x, transform.position.y + 0.93f), Speed * Time.deltaTime);
+            {
+                BoxTarget = new Vector3(transform.position.x, transform.position.y + 0.93f);
             }
             else if (direction == Direction.DOWN)
             {
-                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(transform.position.x, transform.position.y - 0.93f), Speed * Time.deltaTime);
+                BoxTarget = new Vector3(transform.position.x, transform.position.y - 0.93f);
             }
             else if (direction == Direction.RIGHT)
             {
-                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(transform.position.x + 0.93f, transform.position.y ), Speed * Time.deltaTime);
+                BoxTarget = new Vector3(transform.position.x + 0.93f, transform.position.y);
             }
             else if (direction == Direction.LEFT)
             {
-                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(transform.position.x - 0.93f, transform.position.y), Speed * Time.deltaTime);
+                BoxTarget = new Vector3(transform.position.x - 0.93f, transform.position.y);
             }
 
-        }else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaMetal"){
+        }
+        else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaMetal"){
  
             float distanceX = 0;
             float distanceY = 0;
@@ -183,7 +233,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "ParedMetal")
         {
-            currentSpeed += 1;
+            currentSpeed += 0.5f;
             if (direction == Direction.UP)
             {
                 targetPosition = new Vector2(metalSurface.transform.position.x, metalSurface.transform.position.y - 0.93f);
@@ -202,39 +252,84 @@ public class PlayerController : MonoBehaviour
             }
         }else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "ParedMetal")
         {
-            //currentSpeed += 1;
+            currentSpeed += 0.5f;
 
-            float distanceX = 0;
-            float distanceY = 0;
-
-            if (direction == Direction.UP)
-            {
-                distanceX = transform.position.x;
-                distanceY = transform.position.y - metalSurface.transform.position.y;
-                targetPosition = new Vector2(distanceX, distanceY + 0.93f);
-                hability = Hability.NONE;
+            float distanceX;
+            float distanceY;
+            GameObject Collision;
+            if (direction == Direction.UP){
+                RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.down, 100, obstacles);
+                Collision = checkRaycastWithScenarioRepel(hits);
+                if (Collision != null)
+                {
+                    distanceX = transform.position.x;
+                    distanceY = Collision.transform.position.y + 0.93f;
+                    targetPosition = new Vector2(distanceX, distanceY);
+                }
+                
+                
             }
             else if (direction == Direction.DOWN)
             {
-                distanceX = transform.position.x;
-                distanceY =  transform.position.y - metalSurface.transform.position.y;
-                targetPosition = new Vector2(distanceX, distanceY - 0.93f);
-                hability = Hability.NONE;
+                RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.up, 100, obstacles);
+                Collision = checkRaycastWithScenarioRepel(hits);
+                if (Collision != null)
+                {
+                    distanceX = transform.position.x;
+                    distanceY = Collision.transform.position.y - 0.93f;
+                    targetPosition = new Vector2(distanceX, distanceY);
+                }
+
+
+
             }
             else if (direction == Direction.RIGHT)
             {
-                targetPosition = new Vector2(metalSurface.transform.position.x - 0.93f, metalSurface.transform.position.y);
+                RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.left, 100, obstacles);
+                Collision = checkRaycastWithScenarioRepel(hits);
+                if (Collision != null)
+                {
+                    distanceX = Collision.transform.position.x + 0.93f;
+                    distanceY = transform.position.y;
+                    targetPosition = new Vector2(distanceX, distanceY);
+                }
             }
             else if (direction == Direction.LEFT)
             {
-                targetPosition = new Vector2(metalSurface.transform.position.x + 0.93f, metalSurface.transform.position.y);
+                RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.right, 100, obstacles);
+                Collision = checkRaycastWithScenarioRepel(hits);
+                if (Collision != null)
+                {
+                    distanceX = Collision.transform.position.x - 0.93f;
+                    distanceY = transform.position.y;
+                    targetPosition = new Vector2(distanceX, distanceY);
+                }
             }
         }
         else
         {
-            currentSpeed = Speed;
+            if (transform.position == targetPosition)
+            {
+                currentSpeed = Speed;
+            }
+            
         }
 
+    }
+
+    private GameObject checkRaycastWithScenarioRepel(RaycastHit2D _hits)
+    {
+        GameObject Back;
+        if (_hits.collider != null)
+        {
+            
+                Back = _hits.collider.gameObject;
+
+                return Back;
+            
+        }
+
+        return null;
     }
 
     bool CheckColision
