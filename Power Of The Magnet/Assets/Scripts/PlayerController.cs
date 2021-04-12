@@ -9,12 +9,13 @@ public enum Hability { ATTRACT, REPEL, CHARGE };
 public class PlayerController : MonoBehaviour
 {
     public float Speed;
-
-    private Transform metalBox;
-    
-    private Vector3 targetPosition;
+    public LayerMask obstacles;
     public Direction direction;
     public Hability hability;
+
+    private Transform metalBox;
+    private Vector3 targetPosition;
+    
 
     KeyCode attractKey = KeyCode.Mouse0;
     KeyCode repelKey = KeyCode.Mouse1;
@@ -39,12 +40,18 @@ public class PlayerController : MonoBehaviour
                 if (axisDirection.x > 0)
                 {
                     direction = Direction.RIGHT;
-                    targetPosition += new Vector3(0.93f, 0);
+                    if (!CheckColision)
+                    {
+                        targetPosition += new Vector3(0.93f, 0);
+                    }
                 }
                 else
                 {
                     direction = Direction.LEFT;
-                    targetPosition -= new Vector3(0.93f, 0);
+                    if (!CheckColision)
+                    {
+                        targetPosition -= new Vector3(0.93f, 0);
+                    }
                 }
             }
             else
@@ -52,12 +59,17 @@ public class PlayerController : MonoBehaviour
                 if (axisDirection.y > 0)
                 {
                     direction = Direction.UP;
-                    targetPosition += new Vector3(0, 0.93f);
+                    if (!CheckColision)
+                    {
+                        targetPosition += new Vector3(0, 0.93f);
+                    }
                 }
                 else
                 {
                     direction = Direction.DOWN;
-                    targetPosition -= new Vector3(0, 0.93f);
+                    if (!CheckColision){
+                        targetPosition -= new Vector3(0, 0.93f);
+                    }
                 }
             }
 
@@ -128,4 +140,37 @@ public class PlayerController : MonoBehaviour
 
         }
     }
+
+
+    bool CheckColision
+    {
+        get
+        {
+            RaycastHit2D rh;
+
+            Vector2 dir = Vector2.zero;
+            if (direction == Direction.DOWN)
+            {
+                dir = Vector2.down;
+            }
+
+            if (direction == Direction.UP)
+            {
+                dir = Vector2.up;
+            }
+            if (direction == Direction.RIGHT)
+            {
+                dir = Vector2.right;
+            }
+            if (direction == Direction.LEFT)
+            {
+                dir = Vector2.left;
+            }
+
+            rh = Physics2D.Raycast(transform.position, dir, 1, obstacles);
+
+            return rh.collider != null;
+        }
+    }
+
 }
