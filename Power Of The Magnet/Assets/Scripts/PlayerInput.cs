@@ -13,4 +13,19 @@ public class PlayerInput : MonoBehaviour
     {
         get { return Input.GetAxis("Horizontal"); }
     }
+
+    public static bool attractKey
+    {
+        get
+        {
+            return Input.GetKey(KeyCode.Mouse0);
+        }
+    }
+    public static bool repelKey
+    {
+        get
+        {
+            return Input.GetKey(KeyCode.Mouse1);
+        }
+    }
 }
