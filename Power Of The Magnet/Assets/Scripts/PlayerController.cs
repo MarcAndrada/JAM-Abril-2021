@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float Speed;
     public LayerMask obstacles;
 
+    private Vector3 lastposition;
 
     private float currentSpeed;
     private GameObject metalSurface;
@@ -31,7 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 axisDirection = new Vector2(PlayerInput.Horizontal, PlayerInput.Vertical);
 
-        if (axisDirection != Vector2.zero && targetPosition == transform.position)
+        if (axisDirection != Vector2.zero && targetPosition == transform.position && hability == Hability.NONE)
         {
             if (Mathf.Abs(axisDirection.x) > Mathf.Abs(axisDirection.y))
             {
@@ -108,19 +109,19 @@ public class PlayerController : MonoBehaviour
         
 
         if (direction == Direction.UP) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.up, 240, obstacles);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.up, 8.77f, obstacles);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
         else if (direction == Direction.DOWN) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.down, 240, obstacles);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.down, 8.77f, obstacles);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
         else if (direction == Direction.RIGHT) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.right, 240, obstacles);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.right, 8.77f, obstacles);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
         else if (direction == Direction.LEFT) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.left, 240, obstacles);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.left, 8.77f, obstacles);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
 
@@ -133,7 +134,7 @@ public class PlayerController : MonoBehaviour
         {
             currentSpeed = Speed;
             if (direction == Direction.UP)
-            {
+            { 
                 metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3 (transform.position.x, transform.position.y + 0.93f), Speed * Time.deltaTime);
             }
             else if (direction == Direction.DOWN)
@@ -150,22 +151,33 @@ public class PlayerController : MonoBehaviour
             }
 
         }else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaMetal"){
+ 
+            float distanceX = 0;
+            float distanceY = 0;
 
             if (direction == Direction.UP)
             {
-
+                distanceX = transform.position.x;
+                distanceY = metalSurface.transform.position.y - transform.position.y;
+                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(distanceX, distanceY + 0.93f), Speed * Time.deltaTime);
             }
             else if (direction == Direction.DOWN)
             {
-
+                distanceX = transform.position.x;
+                distanceY = metalSurface.transform.position.y - transform.position.y;
+                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(distanceX, distanceY - 0.93f), Speed * Time.deltaTime);
             }
             else if (direction == Direction.RIGHT)
             {
-
+                distanceX = metalSurface.transform.position.x - transform.position.x;
+                distanceY = transform.position.y;
+                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(distanceX + 0.93f, distanceY), Speed * Time.deltaTime);
             }
             else if (direction == Direction.LEFT)
             {
-
+                distanceX = metalSurface.transform.position.x - transform.position.x;
+                distanceY = transform.position.y;
+                metalSurface.transform.position = Vector3.MoveTowards(metalSurface.transform.position, new Vector3(distanceX - 0.93f, distanceY), Speed * Time.deltaTime);
             }
 
         }
@@ -183,6 +195,35 @@ public class PlayerController : MonoBehaviour
             else if (direction == Direction.RIGHT)
             {
                 targetPosition = new Vector2(metalSurface.transform.position.x - 0.93f, metalSurface.transform.position.y );
+            }
+            else if (direction == Direction.LEFT)
+            {
+                targetPosition = new Vector2(metalSurface.transform.position.x + 0.93f, metalSurface.transform.position.y);
+            }
+        }else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "ParedMetal")
+        {
+            //currentSpeed += 1;
+
+            float distanceX = 0;
+            float distanceY = 0;
+
+            if (direction == Direction.UP)
+            {
+                distanceX = transform.position.x;
+                distanceY = transform.position.y - metalSurface.transform.position.y;
+                targetPosition = new Vector2(distanceX, distanceY + 0.93f);
+                hability = Hability.NONE;
+            }
+            else if (direction == Direction.DOWN)
+            {
+                distanceX = transform.position.x;
+                distanceY =  transform.position.y - metalSurface.transform.position.y;
+                targetPosition = new Vector2(distanceX, distanceY - 0.93f);
+                hability = Hability.NONE;
+            }
+            else if (direction == Direction.RIGHT)
+            {
+                targetPosition = new Vector2(metalSurface.transform.position.x - 0.93f, metalSurface.transform.position.y);
             }
             else if (direction == Direction.LEFT)
             {
@@ -227,4 +268,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Pared" || collision.gameObject.tag == "ParedMetal" || collision.gameObject.tag == "CajaMetal")
+        {
+            targetPosition = transform.position;
+        }
+    }
 }

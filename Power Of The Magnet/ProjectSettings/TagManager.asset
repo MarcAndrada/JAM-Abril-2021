@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CajaMetal
   - ParedMetal
+  - Pared
   layers:
   - Default
   - TransparentFX
