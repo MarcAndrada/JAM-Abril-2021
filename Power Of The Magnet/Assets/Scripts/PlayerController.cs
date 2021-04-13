@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
 {
     public float Speed;
     public LayerMask obstacles;
-    public LayerMask fall;
     [SerializeField] private Direction direction;
     [SerializeField] private Hability hability;
     public GameObject OptionMenu;
@@ -76,6 +75,26 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (metalSurface != null)
+        {
+            if (metalSurface.tag == "CajaMetal")
+            {
+                if (BoxTarget == metalSurface.transform.position)
+                {
+                    metalSurface.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    boxSprite.color = Color.white;
+                    metalSurface = null;
+                }
+
+            }else{
+                if (hability == Hability.NONE)
+                {
+                    boxSprite.color = Color.white;
+                    metalSurface = null;
+                }
+            }
+            
+        }
 
         float delta = Time.deltaTime * 1000;
         Vector2 axisDirection = new Vector2(PlayerInput.Horizontal, PlayerInput.Vertical);
@@ -504,12 +523,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("Atract", false);
                 animator.SetBool("Repel", false);
             }
-            if (metalSurface != null && BoxTarget == metalSurface.transform.position)
-            {
-                metalSurface.transform.rotation = Quaternion.Euler(0, 0, 0);
-                boxSprite.color = new Color (255,255,255);
-                metalSurface = null;
-            }
+           
             
         }
 
@@ -524,7 +538,7 @@ public class PlayerController : MonoBehaviour
     }
     private bool checkRaycastWithScenario(RaycastHit2D _hits) {
         if ( _hits.collider != null ) {
-            if( _hits.collider.gameObject.tag == "CajaMetal" || _hits.collider.gameObject.tag == "ParedMetal") {
+            if( _hits.collider.gameObject.tag == "CajaMetal" || _hits.collider.gameObject.tag == "ParedMetal" || _hits.collider.gameObject.tag == "CajaCandado") {
                 metalSurface = _hits.collider.gameObject;
                 boxSprite = metalSurface.GetComponent<SpriteRenderer>();
 
@@ -540,20 +554,20 @@ public class PlayerController : MonoBehaviour
 
         
 
-        if (direction == Direction.UP) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.up, 7.44f, obstacles, fall);
+        if (direction == Direction.UP ) {
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.up, 7.44f, obstacles);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
         else if (direction == Direction.DOWN) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.down, 7.44f, obstacles, fall);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.down, 7.44f, obstacles);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
         else if (direction == Direction.RIGHT) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.right, 7.44f, obstacles, fall);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.right, 7.44f, obstacles);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
         else if (direction == Direction.LEFT) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.left, 7.44f, obstacles, fall);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.left, 7.44f, obstacles);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
 
@@ -664,30 +678,31 @@ public class PlayerController : MonoBehaviour
             moveBox = true;
 
         }
-        else if (hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "ParedMetal")
+        else if (hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "ParedMetal" || hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "CajaCandado")
         {
             animator.SetBool("Atract", true);
             currentSpeed += 0.5f;
             if (direction == Direction.UP)
             {
-                targetPosition = new Vector2(metalSurface.transform.position.x, metalSurface.transform.position.y - 0.93f);
+                targetPosition = new Vector2(transform.position.x, metalSurface.transform.position.y - 0.93f);
             }
             else if (direction == Direction.DOWN)
             {
-                targetPosition = new Vector2(metalSurface.transform.position.x, metalSurface.transform.position.y + 0.93f);
+                targetPosition = new Vector2(transform.position.x, metalSurface.transform.position.y + 0.93f);
             }
             else if (direction == Direction.RIGHT)
             {
-                targetPosition = new Vector2(metalSurface.transform.position.x - 0.93f, metalSurface.transform.position.y);
+                targetPosition = new Vector2(metalSurface.transform.position.x - 0.93f, transform.position.y);
             }
             else if (direction == Direction.LEFT)
             {
-                targetPosition = new Vector2(metalSurface.transform.position.x + 0.93f, metalSurface.transform.position.y);
+                targetPosition = new Vector2(metalSurface.transform.position.x + 0.93f, transform.position.y);
             }
         }
-        else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "ParedMetal"){
+        else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "ParedMetal" || hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaCandado")
+        {
             currentSpeed += 0.5f;
-            RaycastHit2D rh = Physics2D.Raycast(transform.position, Vector2.zero, 0); ;
+            RaycastHit2D rh = Physics2D.Raycast(transform.position, Vector2.zero, 0);
             switch (direction)
             {
                 case Direction.UP:
@@ -709,7 +724,7 @@ public class PlayerController : MonoBehaviour
             
             if (rh.collider != null )
             {
-                if (rh.collider.gameObject.tag == "ParedMetal")
+                if (rh.collider.gameObject.tag == "ParedMetal" || rh.collider.gameObject.tag == "CajaCandado")
                 {
 
                     animator.SetBool("Repel", true);
@@ -855,5 +870,76 @@ public class PlayerController : MonoBehaviour
         OptionMenu.SetActive(false);
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 9)
+        {
+            if (direction == Direction.UP && hability == Hability.NONE)
+            {
+                targetPosition = new Vector2(transform.position.x, collision.gameObject.transform.position.y - 0.93f);
+            }
+            else if (direction == Direction.DOWN && hability == Hability.NONE)
+            {
+                targetPosition = new Vector2(transform.position.x, collision.gameObject.transform.position.y + 0.93f);
+            }
+            else if (direction == Direction.RIGHT && hability == Hability.NONE)
+            {
+                targetPosition = new Vector2(collision.gameObject.transform.position.x - 0.93f, transform.position.y);
+            }
+            else if (direction == Direction.LEFT && hability == Hability.NONE)
+            {
+                targetPosition = new Vector2(collision.gameObject.transform.position.x + 0.93f, transform.position.y);
+            }
+        }
+
+        if (collision.gameObject.tag == "Placa")
+        {
+            GameObject[] CajasCandado = GameObject.FindGameObjectsWithTag("CajaCandado");
+            for (int i = 0; i < CajasCandado.Length; i++)
+            {
+                CajasCandado[i].SetActive(false);
+            }
+
+        }
+        if (collision.gameObject.tag == "PlacaVerde")
+        {
+            GameObject[] CajasCandado = GameObject.FindGameObjectsWithTag("CajaCandadoVerde");
+            for (int i = 0; i < CajasCandado.Length; i++)
+            {
+                CajasCandado[i].SetActive(false);
+            }
+        }
+        if (collision.gameObject.tag == "PlacaRoja")
+        {
+            GameObject[] CajasCandado = GameObject.FindGameObjectsWithTag("CajaCandadoRoja");
+            for (int i = 0; i < CajasCandado.Length; i++)
+            {
+                CajasCandado[i].SetActive(false);
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 9)
+        {
+            if (direction == Direction.UP && hability == Hability.NONE)
+            {
+                targetPosition = new Vector2(transform.position.x, collision.gameObject.transform.position.y - 0.93f);
+            }
+            else if (direction == Direction.DOWN && hability == Hability.NONE)
+            {
+                targetPosition = new Vector2(transform.position.x, collision.gameObject.transform.position.y + 0.93f);
+            }
+            else if (direction == Direction.RIGHT && hability == Hability.NONE)
+            {
+                targetPosition = new Vector2(collision.gameObject.transform.position.x - 0.93f, transform.position.y);
+            }
+            else if (direction == Direction.LEFT && hability == Hability.NONE)
+            {
+                targetPosition = new Vector2(collision.gameObject.transform.position.x + 0.93f, transform.position.y);
+            }
+        }
+    }
 
 }
