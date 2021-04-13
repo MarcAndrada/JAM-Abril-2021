@@ -7,6 +7,12 @@ TagManager:
   - CajaMetal
   - ParedMetal
   - Pared
+  - Placa
+  - CajaCandado
+  - CajaCandadoRoja
+  - CajaCandadoVerde
+  - PlacaVerde
+  - PlacaRoja
   layers:
   - Default
   - TransparentFX
@@ -17,7 +23,7 @@ TagManager:
   - 
   - 
   - Obstacle
-  - 
+  - Caida
   - 
   - 
   - 
