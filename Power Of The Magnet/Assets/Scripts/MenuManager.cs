@@ -15,11 +15,13 @@ public class MenuManager : MonoBehaviour
 
     public void goOptions()
     {
+        SoundManager.PlaySound("ClickMenu");
         SceneManager.LoadScene("OptionMenu");
     }
 
     public void goMainMenu()
     {
+        SoundManager.PlaySound("ClickMenu");
         SceneManager.LoadScene("MainMenu");
     }
 
