@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public enum Direction { UP, DOWN, RIGHT, LEFT };
 public enum Hability { NONE, ATTRACT, REPEL, CHARGE };
 
@@ -10,8 +9,11 @@ public class PlayerController : MonoBehaviour
 {
     public float Speed;
     public LayerMask obstacles;
+    public LayerMask fall;
     [SerializeField] private Direction direction;
     [SerializeField] private Hability hability;
+    public GameObject OptionMenu;
+
     [Header("Particulas Atraer")]
     public GameObject PSAttractU;
     public GameObject PSAttractD;
@@ -22,8 +24,16 @@ public class PlayerController : MonoBehaviour
     public GameObject PSRepelD;
     public GameObject PSRepelR;
     public GameObject PSRepelL;
-
-
+    [Header("Rango de Atraer")]
+    public GameObject AttractAreaU;
+    public GameObject AttractAreaD;
+    public GameObject AttractAreaR;
+    public GameObject AttractAreaL;
+    [Header("Rango de Repeler")]
+    public GameObject RepelAreaU;
+    public GameObject RepelAreaD;
+    public GameObject RepelAreaR;
+    public GameObject RepelAreaL;
 
     private GameObject metalSurface;
     private Animator animator;
@@ -37,10 +47,7 @@ public class PlayerController : MonoBehaviour
     private float ChangeDirTime = 135;
     private float WaitedTime;
     private Vector3 lastposition;
-    private Color BoxColorRed;
-    private Color BoxColorBlue;
-    private float m_Red, m_Blue, m_Green;
-
+    private bool menu;
 
 
     // Start is called before the first frame update
@@ -49,12 +56,27 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         targetPosition = transform.position;
-        direction = Direction.UP;
+        Time.timeScale = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
+        menu = PlayerInput.PauseMenu;
+        if (menu)
+        {
+            if (Time.timeScale == 1)
+            {
+                PauseGame();
+            }
+            else if (Time.timeScale == 0)
+            {
+                
+                ResumeGame();
+            }
+        }
+
+
         float delta = Time.deltaTime * 1000;
         Vector2 axisDirection = new Vector2(PlayerInput.Horizontal, PlayerInput.Vertical);
 
@@ -172,6 +194,16 @@ public class PlayerController : MonoBehaviour
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(false);
 
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(true);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(false);
+
             }
             else if (hability == Hability.REPEL)
             {
@@ -184,6 +216,17 @@ public class PlayerController : MonoBehaviour
                 PSRepelD.SetActive(false);
                 PSRepelR.SetActive(true);
                 PSRepelL.SetActive(false);
+
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(true);
+                RepelAreaL.SetActive(false);
+
             }
             else
             {
@@ -196,6 +239,16 @@ public class PlayerController : MonoBehaviour
                 PSRepelD.SetActive(false);
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(false);
+
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(false);
             }
         }
         else if (direction == Direction.LEFT)
@@ -215,6 +268,15 @@ public class PlayerController : MonoBehaviour
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(false);
 
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(true);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(false);
             }
             else if (hability == Hability.REPEL)
             {
@@ -227,6 +289,16 @@ public class PlayerController : MonoBehaviour
                 PSRepelD.SetActive(false);
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(true);
+
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(true);
             }
             else
             {
@@ -239,6 +311,16 @@ public class PlayerController : MonoBehaviour
                 PSRepelD.SetActive(false);
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(false);
+
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(false);
             }
         }
         else if (direction == Direction.UP)
@@ -259,6 +341,15 @@ public class PlayerController : MonoBehaviour
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(false);
 
+                AttractAreaU.SetActive(true);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(false);
             }
             else if (hability == Hability.REPEL)
             {
@@ -271,6 +362,16 @@ public class PlayerController : MonoBehaviour
                 PSRepelD.SetActive(false);
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(false);
+
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(true);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(false);
             }
             else
             {
@@ -283,6 +384,16 @@ public class PlayerController : MonoBehaviour
                 PSRepelD.SetActive(false);
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(false);
+
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(false);
             }
         }
         else if (direction == Direction.DOWN)
@@ -303,6 +414,16 @@ public class PlayerController : MonoBehaviour
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(false);
 
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(true);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(false);
+
             }
             else if (hability == Hability.REPEL)
             {
@@ -315,6 +436,16 @@ public class PlayerController : MonoBehaviour
                 PSRepelD.SetActive(true);
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(false);
+
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(true);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(false);
             }
             else
             {
@@ -327,6 +458,16 @@ public class PlayerController : MonoBehaviour
                 PSRepelD.SetActive(false);
                 PSRepelR.SetActive(false);
                 PSRepelL.SetActive(false);
+
+                AttractAreaU.SetActive(false);
+                AttractAreaD.SetActive(false);
+                AttractAreaR.SetActive(false);
+                AttractAreaL.SetActive(false);
+
+                RepelAreaU.SetActive(false);
+                RepelAreaD.SetActive(false);
+                RepelAreaR.SetActive(false);
+                RepelAreaL.SetActive(false);
             }
         }
 
@@ -400,19 +541,19 @@ public class PlayerController : MonoBehaviour
         
 
         if (direction == Direction.UP) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.up, 8.77f, obstacles);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.up, 7.44f, obstacles, fall);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
         else if (direction == Direction.DOWN) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.down, 8.77f, obstacles);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.down, 7.44f, obstacles, fall);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
         else if (direction == Direction.RIGHT) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.right, 8.77f, obstacles);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.right, 7.44f, obstacles, fall);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
         else if (direction == Direction.LEFT) {
-            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.left, 8.77f, obstacles);
+            RaycastHit2D hits = Physics2D.Raycast(transform.position, Vector2.left, 7.44f, obstacles, fall);
             if (checkRaycastWithScenario(hits)) { _collision = true; }
         }
 
@@ -455,8 +596,8 @@ public class PlayerController : MonoBehaviour
                 rh = Physics2D.Raycast(transform.position, Vector2.up, 0.93f, obstacles);
                 if (rh.collider != null && rh.collider.gameObject.tag == "CajaMetal") {
                     distanceX = metalSurface.transform.position.x;
-                    distanceY = metalSurface.transform.position.y + 2.30f;
-                    RaycastHit2D hits = Physics2D.Raycast(new Vector2(metalSurface.transform.position.x, metalSurface.transform.position.y + 0.93f), Vector2.up, 1.86f, obstacles);
+                    distanceY = metalSurface.transform.position.y + 3.72f;
+                    RaycastHit2D hits = Physics2D.Raycast(new Vector2(metalSurface.transform.position.x, metalSurface.transform.position.y + 0.93f), Vector2.up, 2.79f, obstacles);
                     Collision = checkRaycastWithScenarioRepel(hits);
                     if (Collision != null)
                     {
@@ -473,8 +614,8 @@ public class PlayerController : MonoBehaviour
                 if (rh.collider != null && rh.collider.gameObject.tag == "CajaMetal")
                 {
                     distanceX = metalSurface.transform.position.x;
-                    distanceY = metalSurface.transform.position.y - 2.30f;
-                    RaycastHit2D hits = Physics2D.Raycast(new Vector2(metalSurface.transform.position.x, metalSurface.transform.position.y - 0.93f), Vector2.down, 1.86f, obstacles);
+                    distanceY = metalSurface.transform.position.y - 3.72f;
+                    RaycastHit2D hits = Physics2D.Raycast(new Vector2(metalSurface.transform.position.x, metalSurface.transform.position.y - 0.93f), Vector2.down, 2.79f, obstacles);
                     Collision = checkRaycastWithScenarioRepel(hits);
                     if (Collision != null)
                     {
@@ -488,9 +629,9 @@ public class PlayerController : MonoBehaviour
                 rh = Physics2D.Raycast(transform.position, Vector2.right, 0.93f, obstacles);
                 if (rh.collider != null && rh.collider.gameObject.tag == "CajaMetal")
                 {
-                    distanceX = metalSurface.transform.position.x + 2.30f;
+                    distanceX = metalSurface.transform.position.x + 3.72f;
                     distanceY = metalSurface.transform.position.y;
-                    RaycastHit2D hits = Physics2D.Raycast(new Vector2(metalSurface.transform.position.x + 0.93f, metalSurface.transform.position.y), Vector2.right, 1.86f, obstacles);
+                    RaycastHit2D hits = Physics2D.Raycast(new Vector2(metalSurface.transform.position.x + 0.93f, metalSurface.transform.position.y), Vector2.right, 2.79f, obstacles);
                     Collision = checkRaycastWithScenarioRepel(hits);
                     if (Collision != null)
                     {
@@ -504,9 +645,9 @@ public class PlayerController : MonoBehaviour
                 rh = Physics2D.Raycast(transform.position, Vector2.left, 0.93f, obstacles);
                 if (rh.collider != null && rh.collider.gameObject.tag == "CajaMetal")
                 {
-                    distanceX = metalSurface.transform.position.x - 2.30f;
+                    distanceX = metalSurface.transform.position.x - 3.72f;
                     distanceY = metalSurface.transform.position.y;
-                    RaycastHit2D hits = Physics2D.Raycast(new Vector2(metalSurface.transform.position.x - 0.93f, metalSurface.transform.position.y), Vector2.left, 1.86f, obstacles);
+                    RaycastHit2D hits = Physics2D.Raycast(new Vector2(metalSurface.transform.position.x - 0.93f, metalSurface.transform.position.y), Vector2.left, 2.79f, obstacles);
                     Collision = checkRaycastWithScenarioRepel(hits);
                     if (Collision != null)
                     {
@@ -545,7 +686,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "ParedMetal"){
-
+            currentSpeed += 0.5f;
             RaycastHit2D rh = Physics2D.Raycast(transform.position, Vector2.zero, 0); ;
             switch (direction)
             {
@@ -701,4 +842,18 @@ public class PlayerController : MonoBehaviour
             metalSurface.transform.rotation = Quaternion.Euler(0, 0, Random.Range(-5, 5));
         }
     }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;// que la velocidad del juego sea 0
+        OptionMenu.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;// que la velocidad del juego regrese a 1
+        OptionMenu.SetActive(false);
+    }
+
+
 }

@@ -16,16 +16,17 @@ public class PlayerInput : MonoBehaviour
 
     public static bool attractKey
     {
-        get
-        {
-            return Input.GetKey(KeyCode.Mouse0);
-        }
+        get{ return Input.GetKey(KeyCode.Mouse0); }
     }
     public static bool repelKey
     {
         get
-        {
-            return Input.GetKey(KeyCode.Mouse1);
-        }
+        { return Input.GetKey(KeyCode.Mouse1); }
+    }
+
+    public static bool PauseMenu
+    {
+
+        get { return Input.GetKeyDown(KeyCode.Escape);  }
     }
 }

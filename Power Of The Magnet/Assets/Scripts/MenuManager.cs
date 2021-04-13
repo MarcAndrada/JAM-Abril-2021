@@ -27,6 +27,14 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("CreditsScene");
     }
+
+    public void ReloadLevel()
+    {
+       
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+    }
+
     public void ExitGame()
     {
 
