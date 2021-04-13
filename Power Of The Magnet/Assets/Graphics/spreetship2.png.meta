@@ -1,0 +1,410 @@
+fileFormatVersion: 2
+guid: 40672883c4414524385b7e99ae92611c
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 127
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PersonajeLR_Iddle_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4240
+        width: 1955
+        height: 1790
+      alignment: 9
+      pivot: {x: 0.51410353, y: 0.46123728}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7d364c4f3609c7a0800000000000000
+      internalID: -6356542530124366469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PersonajeLR_Iddle_2
+      rect:
+        serializedVersion: 2
+        x: 1955
+        y: 4240
+        width: 1921
+        height: 1790
+      alignment: 9
+      pivot: {x: 0.3793663, y: 0.45644832}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8bd448e6e4349a90800000000000000
+      internalID: -7308158128971523190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PersonajeLR_Iddle_3
+      rect:
+        serializedVersion: 2
+        x: 3605
+        y: 4240
+        width: 1955
+        height: 1790
+      alignment: 9
+      pivot: {x: 0.41524535, y: 0.45997104}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b2912a89e40f62d0800000000000000
+      internalID: -3283400202238455119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PersonajeLR_Iddle_4
+      rect:
+        serializedVersion: 2
+        x: 5269
+        y: 4240
+        width: 1955
+        height: 1790
+      alignment: 9
+      pivot: {x: 0.5152436, y: 0.46081203}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6177a83497d62e90800000000000000
+      internalID: -7050711134996303508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PersonajeLR_run_1
+      rect:
+        serializedVersion: 2
+        x: 7009
+        y: 4240
+        width: 1955
+        height: 1790
+      alignment: 9
+      pivot: {x: 0.5191606, y: 0.46113417}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a4c514739c4c4890800000000000000
+      internalID: -7472513485523008349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PersonajeLR_run_2
+      rect:
+        serializedVersion: 2
+        x: 8665
+        y: 4240
+        width: 1955
+        height: 1790
+      alignment: 9
+      pivot: {x: 0.6068954, y: 0.45850155}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b1f3139a7bad5900800000000000000
+      internalID: 674884062117360053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepelEffectUD
+      rect:
+        serializedVersion: 2
+        x: 7444
+        y: 1904
+        width: 1337
+        height: 1125
+      alignment: 9
+      pivot: {x: 0.50696105, y: 0.517664}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39088b37be4a802f0800000000000000
+      internalID: -1006373185551564653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttractEffectRL
+      rect:
+        serializedVersion: 2
+        x: 9209
+        y: 557
+        width: 1337
+        height: 1125
+      alignment: 9
+      pivot: {x: 0.3790224, y: 0.55967665}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3b0f316aa2e12a90800000000000000
+      internalID: -7340336696233358534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PersonajeUD_Wall_1
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 497
+        width: 1955
+        height: 1790
+      alignment: 9
+      pivot: {x: 0.5044154, y: 0.47878137}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4b09fe54eb010740800000000000000
+      internalID: 5116383727143422795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PersonajeLR_Wall_1
+      rect:
+        serializedVersion: 2
+        x: 1737
+        y: 442
+        width: 1955
+        height: 1790
+      alignment: 9
+      pivot: {x: 0.48832297, y: 0.4715484}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99be25f6b110d2340800000000000000
+      internalID: 4840526391836601241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PersonajeUD_Wall_2
+      rect:
+        serializedVersion: 2
+        x: 3423
+        y: 455
+        width: 1955
+        height: 1790
+      alignment: 9
+      pivot: {x: 0.50351065, y: 0.50191706}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c41489839b6d06e20800000000000000
+      internalID: 3341907014515704140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PersonajeLR_Wall_2
+      rect:
+        serializedVersion: 2
+        x: 5273
+        y: 400
+        width: 1955
+        height: 1790
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7055702ee9c8151f0800000000000000
+      internalID: -1057909823430503161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RepelEffectRL
+      rect:
+        serializedVersion: 2
+        x: 7462
+        y: 663
+        width: 1337
+        height: 1125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a50a38bd5539cf380800000000000000
+      internalID: -8936105563645566886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AttractEffectUD
+      rect:
+        serializedVersion: 2
+        x: 9213
+        y: 1873
+        width: 1337
+        height: 1125
+      alignment: 9
+      pivot: {x: 0.49999925, y: 0.30643338}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f90fe05f0c17e480800000000000000
+      internalID: -8870090088974972426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
