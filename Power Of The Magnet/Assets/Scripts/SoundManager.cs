@@ -6,20 +6,28 @@ using UnityEngine.SceneManagement;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
-
-    public static AudioClip Song, Caja, Iman;
-    static AudioSource audiosrc;
+    public GameObject Hijo;
+    public static AudioClip Song, Caja, Iman, Click;
+    private static AudioSource audiosrc;
+    private static AudioSource audioSource2;
 
     private float musicVolume = 0.1f;
     private float sfxVolume = 0.1f;
 
     void Awake() {
-        if (Instance == null) {
+
+        
+        if (Instance == null)
+        {
             Instance = this;
             DontDestroyOnLoad(this);
-        } else {
+        }
+        else
+        {
             Debug.Log("Warning: multiple " + this + " in scene!!");
         }
+        
+        
     }
 
     // Start is called before the first frame update
@@ -27,17 +35,18 @@ public class SoundManager : MonoBehaviour
         Song = Resources.Load<AudioClip>("Song");
         Caja = Resources.Load<AudioClip>("Caja");
         Iman = Resources.Load<AudioClip>("Iman");
-
+        Click = Resources.Load<AudioClip>("ClickMenu");
         audiosrc = GetComponent<AudioSource>();
-
+        audioSource2 = Hijo.GetComponent<AudioSource>();
         PlaySound("Song");
     }
     // Update is called once per frame
     void Update()
     {
-        if (!audiosrc.isPlaying) { PlaySound("Song"); }
+        audioSource2.volume = sfxVolume;
 
-        
+        audiosrc.volume = musicVolume;
+
     }
 
     public void SetVolumeMusic(float vol)
@@ -55,6 +64,9 @@ public class SoundManager : MonoBehaviour
         switch (clip) {
             case "Song":
                 audiosrc.PlayOneShot(Song);
+                break;
+            case "ClickMenu":
+                audioSource2.PlayOneShot(Click);
                 break;
         }
     }

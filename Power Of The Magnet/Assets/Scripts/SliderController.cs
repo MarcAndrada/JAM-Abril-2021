@@ -11,11 +11,10 @@ public class SliderController : MonoBehaviour
     private Slider MusicSlider;
     private Slider SFXSlider;
 
-    private SoundManager SFX_Cont;
-    private SoundManager Music_Cont;
+    private SoundManager Volume_Cont;
     private float Music = 0.1f;
     private float SFX = 0.1f;
-
+    private int tries = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +22,7 @@ public class SliderController : MonoBehaviour
 
         aMusic = GameObject.FindGameObjectWithTag("MusicSlider");
         aSFX = GameObject.FindGameObjectWithTag("SFXSlider");
-
-        Music_Cont = GetComponentInChildren<SoundManager>();
-        SFX_Cont = GetComponent<SoundManager>();
+        Volume_Cont = GetComponent<SoundManager>();
 
         if (aMusic != null)
         {
@@ -34,7 +31,7 @@ public class SliderController : MonoBehaviour
         }
         else
         {
-            Music_Cont.SetVolumeMusic(Music);
+            Volume_Cont.SetVolumeMusic(Music);
         }
         if (aSFX != null)
         {
@@ -43,12 +40,32 @@ public class SliderController : MonoBehaviour
         }
         else
         {
-            SFX_Cont.SetVolumeSFX(SFX);
+             Volume_Cont.SetVolumeSFX(SFX);
         }
     }
 
     private void Update()
     {
+        if (aMusic == null && tries < 11 || aSFX == null && tries < 11)
+        {
+            aMusic = GameObject.FindGameObjectWithTag("MusicSlider");
+            aSFX = GameObject.FindGameObjectWithTag("SFXSlider");
+           if(aMusic != null){
+                MusicSlider = aMusic.GetComponent<Slider>();
+                MusicSlider.value = Music;
+           }else{
+                Volume_Cont.SetVolumeMusic(Music);
+            }
+
+            if (aSFX != null)
+            {
+                SFXSlider = aSFX.GetComponent<Slider>();
+                SFXSlider.value = SFX;
+            }else{
+                Volume_Cont.SetVolumeSFX(SFX);
+            }
+        }
+
         if (MusicSlider != null)
         {
             Music = MusicSlider.value;
@@ -59,6 +76,12 @@ public class SliderController : MonoBehaviour
             SFX = SFXSlider.value;
 
         }
+        if (Volume_Cont != null)
+        {
+            Volume_Cont.SetVolumeMusic(Music);
+            Volume_Cont.SetVolumeSFX(SFX);
+        }
+        
     }
     public float GetMusicVol()
     {
