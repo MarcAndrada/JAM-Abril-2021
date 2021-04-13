@@ -17,16 +17,7 @@ public class SliderController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //BinaryReader reader;
-        //if (File.Exists("sound.sav"))
-        //{
-        //    reader = new BinaryReader(File.Open("sound.sav", FileMode.Open));
-        //    Music = reader.ReadSingle();
-        //    SFX = reader.ReadSingle();
-        //    reader.Close();
-        //}
-        //else { return; }
-
+        
         Music_Cont = GetComponentInChildren<SoundManager>();
         SFX_Cont = GetComponent<SoundManager>();
 
@@ -37,7 +28,7 @@ public class SliderController : MonoBehaviour
         }
         else
         {
-            Music_Cont.SetVolume(Music);
+            Music_Cont.SetVolumeMusic(Music);
         }
         if (SFXSlider != null)
         {
@@ -46,7 +37,7 @@ public class SliderController : MonoBehaviour
         }
         else
         {
-            SFX_Cont.SetVolume(SFX);
+            SFX_Cont.SetVolumeSFX(SFX);
         }
     }
 
@@ -64,7 +55,6 @@ public class SliderController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     public float GetMusicVol()
     {
         return Music;
@@ -73,12 +63,4 @@ public class SliderController : MonoBehaviour
     {
         return SFX;
     }
-
-
-    //public void SaveValues()
-    //{
-    //    BinaryWriter writer = new BinaryWriter(File.Open("sound.sav", FileMode.Create));
-    //    writer.Write(Music);
-    //    writer.Write(SFX);
-    //}
 }

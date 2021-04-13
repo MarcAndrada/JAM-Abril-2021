@@ -1344,6 +1344,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2953681041202109574, guid: c7b4ac43e0c43504e868dd2e8c9fdb8c,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2953681041202109575, guid: c7b4ac43e0c43504e868dd2e8c9fdb8c,
         type: 3}
       propertyPath: m_RootOrder
@@ -1401,3 +1406,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7b4ac43e0c43504e868dd2e8c9fdb8c, type: 3}
+--- !u!1 &2953681040750933996 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2953681041202109569, guid: c7b4ac43e0c43504e868dd2e8c9fdb8c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2953681040750933995}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2953681040750933997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2953681040750933996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 374e410abe07b7548ae8c3fd7fda6778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MusicSlider: {fileID: 0}
+  SFXSlider: {fileID: 0}
