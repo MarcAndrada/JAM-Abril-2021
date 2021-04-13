@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class SliderController : MonoBehaviour
 {
-    public Slider MusicSlider;
-    public Slider SFXSlider;
+    private GameObject aMusic;
+    private GameObject aSFX;
+
+    private Slider MusicSlider;
+    private Slider SFXSlider;
 
     private SoundManager SFX_Cont;
     private SoundManager Music_Cont;
@@ -17,22 +20,25 @@ public class SliderController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        aMusic = GameObject.FindGameObjectWithTag("MusicSlider");
+        aSFX = GameObject.FindGameObjectWithTag("SFXSlider");
+
         Music_Cont = GetComponentInChildren<SoundManager>();
         SFX_Cont = GetComponent<SoundManager>();
 
-        if (MusicSlider != null)
+        if (aMusic != null)
         {
-            MusicSlider = MusicSlider.GetComponent<Slider>();
+            MusicSlider = aMusic.GetComponent<Slider>();
             MusicSlider.value = Music;
         }
         else
         {
             Music_Cont.SetVolumeMusic(Music);
         }
-        if (SFXSlider != null)
+        if (aSFX != null)
         {
-            SFXSlider = SFXSlider.GetComponent<Slider>();
+            SFXSlider = aSFX.GetComponent<Slider>();
             SFXSlider.value = SFX;
         }
         else
@@ -54,7 +60,6 @@ public class SliderController : MonoBehaviour
 
         }
     }
-
     public float GetMusicVol()
     {
         return Music;
@@ -63,4 +68,12 @@ public class SliderController : MonoBehaviour
     {
         return SFX;
     }
+
+
+    //public void SaveValues()
+    //{
+    //    BinaryWriter writer = new BinaryWriter(File.Open("sound.sav", FileMode.Create));
+    //    writer.Write(Music);
+    //    writer.Write(SFX);
+    //}
 }

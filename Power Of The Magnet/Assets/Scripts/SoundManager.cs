@@ -5,11 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager Instance { get; private set; }
+
     public static AudioClip Song, Caja, Iman;
     static AudioSource audiosrc;
 
     private float musicVolume = 0.1f;
     private float sfxVolume = 0.1f;
+
+    void Awake() {
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        } else {
+            Debug.Log("Warning: multiple " + this + " in scene!!");
+        }
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -26,10 +37,7 @@ public class SoundManager : MonoBehaviour
     {
         if (!audiosrc.isPlaying) { PlaySound("Song"); }
 
-        audiosrc.volume = musicVolume;
-
-        //if (audiosrc.isPlaying && audiosrc.name == "Song") { audiosrc.volume = SliderController.GetMusicVol(); } 
-
+        
     }
 
     public void SetVolumeMusic(float vol)
