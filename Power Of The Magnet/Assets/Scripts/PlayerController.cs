@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
     private float timer = 0.0f;
 
 
-    // Start is called before the first frame update
+    // Start is called before the first frame update.
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -545,7 +545,7 @@ public class PlayerController : MonoBehaviour
     }
     private bool checkRaycastWithScenario(RaycastHit2D _hits) {
         if ( _hits.collider != null ) {
-            if( _hits.collider.gameObject.tag == "CajaMetal" || _hits.collider.gameObject.tag == "ParedMetal" || _hits.collider.gameObject.tag == "CajaCandado") {
+            if( _hits.collider.gameObject.tag == "CajaMetal" || _hits.collider.gameObject.tag == "ParedMetal" || _hits.collider.gameObject.tag == "CajaCandado" || _hits.collider.gameObject.tag == "CajaCandadoRoja" || _hits.collider.gameObject.tag == "CajaCandadoVerde")  {
                 metalSurface = _hits.collider.gameObject;
                 boxSprite = metalSurface.GetComponent<SpriteRenderer>();
 
@@ -683,7 +683,7 @@ public class PlayerController : MonoBehaviour
             }
             moveBox = true;
         }
-        else if (hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "ParedMetal" || hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "CajaCandado")
+        else if (hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "ParedMetal" || hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "CajaCandado" || hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaCandadoRoja" || hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaCandadoVerde")
         {
             animator.SetBool("Atract", true);
             currentSpeed += 0.5f;
@@ -704,7 +704,7 @@ public class PlayerController : MonoBehaviour
                 targetPosition = new Vector2(metalSurface.transform.position.x + 0.93f, transform.position.y);
             }
         }
-        else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "ParedMetal" || hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaCandado")
+        else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "ParedMetal" || hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaCandado" || hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaCandadoRoja" || hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaCandadoVerde")
         {
             currentSpeed += 0.5f;
             RaycastHit2D rh = Physics2D.Raycast(transform.position, Vector2.zero, 0);
