@@ -27,6 +27,8 @@ public class MenuManager : MonoBehaviour
 
     public void goCredits()
     {
+        SoundManager.PlaySound("ClickMenu");
+        SoundManager.PlaySound("Electric");
         SceneManager.LoadScene("CreditsScene");
     }
 

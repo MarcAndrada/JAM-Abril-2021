@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     private float WaitedTime;
     private Vector3 lastposition;
     private bool menu;
+    private float timer = 0.0f;
 
 
     // Start is called before the first frame update
@@ -498,7 +499,15 @@ public class PlayerController : MonoBehaviour
         else if (transform.position == targetPosition && animator.GetBool("Walk"))
         {
             animator.SetBool("Walk", false);
-            
+        }
+        if (transform.position != targetPosition)
+        {
+            timer += Time.deltaTime;
+            if (timer > 0.35f)
+            {
+                timer = 0;
+                SoundManager.PlaySound("Step");
+            }
         }
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, currentSpeed * Time.deltaTime);
 
@@ -506,13 +515,13 @@ public class PlayerController : MonoBehaviour
         {
             hability = Hability.ATTRACT;
             ActivateHablility();
+            SoundManager.PlaySound("Iman");
         }
         else if (PlayerInput.repelKey)
         {
+            SoundManager.PlaySound("Iman");
             hability = Hability.REPEL;
             ActivateHablility();
-            
-
         }
         else
         {
@@ -523,8 +532,6 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("Atract", false);
                 animator.SetBool("Repel", false);
             }
-           
-            
         }
 
         if (moveBox)
@@ -596,7 +603,6 @@ public class PlayerController : MonoBehaviour
             {
                 BoxTarget = new Vector3(transform.position.x - 0.93f, transform.position.y);
             }
-
         }
         else if (hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaMetal") {
 
@@ -676,7 +682,6 @@ public class PlayerController : MonoBehaviour
                 return;
             }
             moveBox = true;
-
         }
         else if (hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "ParedMetal" || hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "CajaCandado")
         {
@@ -728,7 +733,6 @@ public class PlayerController : MonoBehaviour
                 {
 
                     animator.SetBool("Repel", true);
-
                     currentSpeed += 0.5f;
 
                     float distanceX;
@@ -792,10 +796,8 @@ public class PlayerController : MonoBehaviour
             if (transform.position == targetPosition)
             {
                 currentSpeed = Speed;
-            }
-            
+            }   
         }
-
     }
 
     private GameObject checkRaycastWithScenarioRepel(RaycastHit2D _hits)
@@ -894,6 +896,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "Placa")
         {
+            SoundManager.PlaySound("Door");
             GameObject[] CajasCandado = GameObject.FindGameObjectsWithTag("CajaCandado");
             for (int i = 0; i < CajasCandado.Length; i++)
             {
@@ -903,6 +906,7 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.tag == "PlacaVerde")
         {
+            SoundManager.PlaySound("Door");
             GameObject[] CajasCandado = GameObject.FindGameObjectsWithTag("CajaCandadoVerde");
             for (int i = 0; i < CajasCandado.Length; i++)
             {
@@ -911,6 +915,7 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.tag == "PlacaRoja")
         {
+            SoundManager.PlaySound("Door");
             GameObject[] CajasCandado = GameObject.FindGameObjectsWithTag("CajaCandadoRoja");
             for (int i = 0; i < CajasCandado.Length; i++)
             {

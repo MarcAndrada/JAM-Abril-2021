@@ -7,7 +7,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
     public GameObject Hijo;
-    public static AudioClip Song, Caja, Iman, Click;
+    public static AudioClip Song, Iman, Click, Door, Electric, Step;
     private static AudioSource audiosrc;
     private static AudioSource audioSource2;
 
@@ -33,9 +33,13 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         Song = Resources.Load<AudioClip>("Song");
-        Caja = Resources.Load<AudioClip>("Caja");
         Iman = Resources.Load<AudioClip>("Iman");
         Click = Resources.Load<AudioClip>("ClickMenu");
+        Door = Resources.Load<AudioClip>("Door");
+        Electric = Resources.Load<AudioClip>("Electric");
+        Step = Resources.Load<AudioClip>("Step");
+
+
         audiosrc = GetComponent<AudioSource>();
         audioSource2 = Hijo.GetComponent<AudioSource>();
         PlaySound("Song");
@@ -67,6 +71,18 @@ public class SoundManager : MonoBehaviour
                 break;
             case "ClickMenu":
                 audioSource2.PlayOneShot(Click);
+                break;
+            case "Iman":
+                audioSource2.PlayOneShot(Iman);
+                break;
+            case "Door":
+                audioSource2.PlayOneShot(Door);
+                break;
+            case "Electric":
+                audioSource2.PlayOneShot(Electric);
+                break;
+            case "Step":
+                audioSource2.PlayOneShot(Step);
                 break;
         }
     }

@@ -22,6 +22,10 @@ public class ChangeLevel : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            if(nextlevel == "CreditsScene")
+            {
+                SoundManager.PlaySound("Electric");
+            }
             SceneManager.LoadScene(nextlevel);
         }
     }
