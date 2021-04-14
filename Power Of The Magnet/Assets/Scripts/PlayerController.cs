@@ -683,7 +683,7 @@ public class PlayerController : MonoBehaviour
             }
             moveBox = true;
         }
-        else if (hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "ParedMetal" || hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "CajaCandado" || hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaCandadoRoja" || hability == Hability.REPEL && StartRayCast() && metalSurface.tag == "CajaCandadoVerde")
+        else if (hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "ParedMetal" || hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "CajaCandado" || hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "CajaCandadoRoja" || hability == Hability.ATTRACT && StartRayCast() && metalSurface.tag == "CajaCandadoVerde")
         {
             animator.SetBool("Atract", true);
             currentSpeed += 0.5f;
@@ -729,7 +729,7 @@ public class PlayerController : MonoBehaviour
             
             if (rh.collider != null )
             {
-                if (rh.collider.gameObject.tag == "ParedMetal" || rh.collider.gameObject.tag == "CajaCandado")
+                if (rh.collider.gameObject.tag == "ParedMetal" || rh.collider.gameObject.tag == "CajaCandado" || rh.collider.gameObject.tag == "CajaCandadoRoja" || rh.collider.gameObject.tag == "CajaCandadoVerde")
                 {
 
                     animator.SetBool("Repel", true);
@@ -896,16 +896,19 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "Placa")
         {
+            Animator plateAnimator = collision.gameObject.GetComponent<Animator>();
+            plateAnimator.SetBool("Pulsado", true);
             SoundManager.PlaySound("Door");
             GameObject[] CajasCandado = GameObject.FindGameObjectsWithTag("CajaCandado");
             for (int i = 0; i < CajasCandado.Length; i++)
             {
                 CajasCandado[i].SetActive(false);
             }
-
         }
         if (collision.gameObject.tag == "PlacaVerde")
         {
+            Animator plateAnimator = collision.gameObject.GetComponent<Animator>();
+            plateAnimator.SetBool("Pulsado", true);
             SoundManager.PlaySound("Door");
             GameObject[] CajasCandado = GameObject.FindGameObjectsWithTag("CajaCandadoVerde");
             for (int i = 0; i < CajasCandado.Length; i++)
@@ -915,6 +918,8 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.tag == "PlacaRoja")
         {
+            Animator plateAnimator = collision.gameObject.GetComponent<Animator>();
+            plateAnimator.SetBool("Pulsado", true);
             SoundManager.PlaySound("Door");
             GameObject[] CajasCandado = GameObject.FindGameObjectsWithTag("CajaCandadoRoja");
             for (int i = 0; i < CajasCandado.Length; i++)
