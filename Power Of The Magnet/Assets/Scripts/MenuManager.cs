@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
 
     public void goGame()
     {
+        SoundManager.PlaySound("ClickMenu");
         SceneManager.LoadScene("Nivel1");
     }
 
